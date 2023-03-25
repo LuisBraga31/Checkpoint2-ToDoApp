@@ -11,8 +11,6 @@
   <link rel="stylesheet" href="styles/acesso.css">
 
   <!-- ---------------------- lógica aplicada no registro -------------------- -->
-  <script src="/scripts/utils.js"></script>
-  <script src="/scripts/signup.js"></script>
 
 </head>
 
@@ -29,26 +27,31 @@
 
       <label>
         Nome:
-        <input type="text">
+        <input id="itemfirstname" type="text" required>
+        <small>Preencher o nome corretamente</small>
       </label>
       <label>
         Sobrenome:
-        <input type="text">
+        <input id="itemlastname" type="text" required>
+        <small>Preencher o sobrenome corretamente</small>
       </label>
       <label>
         Email:
-        <input type="email">
+        <input id="itememail" type="email" required>
+        <small>Preencher o email corretamente</small>
       </label>
       <label>
         Senha:
-        <input type="password">
+        <input id="itempassword" type="password" required minlength="8">
+        <small>Criar senha com 8 caracteres</small>
       </label>
       <label>
         Repetir senha:
-        <input type="password">
+        <input id="itempassword2" type="password"required>
+        <small>Senhas não conferem</small>
       </label>
 
-      <button>Criar conta</button>
+      <button id="eventRegister">Criar conta</button>
 
     </form>
     <div class="ingressar">
@@ -56,6 +59,8 @@
     </div>
   </div>
 
+  <script src="./js/signup.js"></script>
+  
 </body>
 
 </html>

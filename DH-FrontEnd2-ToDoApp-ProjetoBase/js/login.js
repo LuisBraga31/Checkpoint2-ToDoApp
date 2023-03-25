@@ -8,8 +8,10 @@ function validaInput (input) {
 
     if(inputValidacao) {
         elementFatherRef.classList.remove('error');
+        console.log('Esta sem erro!');
     } else {
         elementFatherRef.classList.add('error');
+        console.log('Esta com erro!');
     }
     
 }
@@ -17,3 +19,4 @@ function validaInput (input) {
 
 userEmailRef.addEventListener('keyup', () => validaInput(userEmailRef));
 userSenhaRef.addEventListener('keyup', () => validaInput(userSenhaRef));
+
