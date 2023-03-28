@@ -20,6 +20,18 @@ function validaInput (input) {
     
 }
 
+function validaSenhas() {
+
+    const elementFatherPasswordRef = registroPassword2.parentElement; 
+
+    if(registroPassword2.value === registroPassword.value) {
+        elementFatherPasswordRef.classList.remove('error');
+    } else {
+        elementFatherPasswordRef.classList.add('error');
+    }
+
+}
+
 
 registroFirstName.addEventListener('keyup', () => validaInput(registroFirstName));
 registroLastName.addEventListener('keyup', () => validaInput(registroLastName));
@@ -27,6 +39,8 @@ registroEmail.addEventListener('keyup', () => validaInput(registroEmail));
 registroPassword.addEventListener('keyup', () => validaInput(registroPassword));
 registroPassword2.addEventListener('keyup', () => validaInput(registroPassword2));
 
+registroPassword.addEventListener('keyup', () => validaSenhas());
+registroPassword2.addEventListener('keyup', () => validaSenhas());
 
 var userData = {
 
