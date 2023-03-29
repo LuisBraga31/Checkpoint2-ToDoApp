@@ -41,15 +41,11 @@ function validateRepeatPassword() {
 
 }
 
+function validateRegister(item, event) {
+    userData[event.target.id] = item;
+}
+
 /*
-function teste (name,lastName,email,password) {
-    userData.firstName = name
-    userData.lastName = lastName
-    userData.email = email
-    userData.password = password
-
-}*/
-
 function validateFirstName (name) {
     userData.firstName = name;
 }
@@ -64,7 +60,7 @@ function validateEmail(email) {
 
 function validatePassword (password) {
     userData.password = password;
-}
+}*/
 
 function cadastro (event) {
 
@@ -90,6 +86,7 @@ function cadastro (event) {
 
             } else {
                 alert('Usuário cadastrado');
+                console.log(userData);
             }
         }
     );
@@ -110,9 +107,9 @@ registroPassword2.addEventListener('keyup', () => validateRepeatPassword());
 
     /* 03.2 - Eventos de Registro */
 
-registroFirstName.addEventListener('keyup', (event) => validateFirstName(event.target.value)); 
-registroLastName.addEventListener('keyup', (event) => validatelastName(event.target.value)); 
-registroEmail.addEventListener('keyup', (event) => validateEmail(event.target.value))
-registroPassword.addEventListener('keyup', (event) => validatePassword(event.target.value)); 
+registroFirstName.addEventListener('keyup', (event) => validateRegister(event.target.value, event)); 
+registroLastName.addEventListener('keyup', (event) => validateRegister(event.target.value, event)); 
+registroEmail.addEventListener('keyup', (event) => validateRegister(event.target.value, event))
+registroPassword.addEventListener('keyup', (event) => validateRegister(event.target.value, event)); 
 
 registrocadastro.addEventListener('click', (event) => cadastro(event));
