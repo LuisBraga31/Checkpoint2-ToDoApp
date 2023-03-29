@@ -1,26 +1,35 @@
-const registroFirstName = document.querySelector('#itemfirstname');
-const registroLastName = document.querySelector('#itemlastname');
-const registroEmail = document.querySelector('#itememail');
-const registroPassword = document.querySelector('#itempassword');
-const registroPassword2 = document.querySelector('#itempassword2');
-const registrocadastro = document.querySelector('#eventRegister');
+/* 01 - Variáveis */
 
-function validaInput (input) {
+const registroFirstName = document.querySelector('#firstName');
+const registroLastName = document.querySelector('#lastName');
+const registroEmail = document.querySelector('#email');
+const registroPassword = document.querySelector('#password');
+const registroPassword2 = document.querySelector('#passwordRepeat');
+const registrocadastro = document.querySelector('#buttonRegister');
+
+var userData = {
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: ''
+};
+
+/* 02 - Funções 
+ */
+function validateInput (input) {
 
     const inputValidacao = input.checkValidity();
     const elementFatherRef = input.parentElement;
 
-    if(inputValidacao) {
+    if (inputValidacao) {
         elementFatherRef.classList.remove('error');
-        console.log('Esta sem erro!');
     } else {
         elementFatherRef.classList.add('error');
-        console.log('Esta com erro!');
     }
     
 }
 
-function validaSenhas() {
+function validateRepeatPassword() {
 
     const elementFatherPasswordRef = registroPassword2.parentElement; 
 
@@ -32,25 +41,6 @@ function validaSenhas() {
 
 }
 
-
-registroFirstName.addEventListener('keyup', () => validaInput(registroFirstName));
-registroLastName.addEventListener('keyup', () => validaInput(registroLastName));
-registroEmail.addEventListener('keyup', () => validaInput(registroEmail));
-registroPassword.addEventListener('keyup', () => validaInput(registroPassword));
-registroPassword2.addEventListener('keyup', () => validaInput(registroPassword2));
-
-registroPassword.addEventListener('keyup', () => validaSenhas());
-registroPassword2.addEventListener('keyup', () => validaSenhas());
-
-var userData = {
-
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: ''
-
-};
-
 /*
 function teste (name,lastName,email,password) {
     userData.firstName = name
@@ -60,7 +50,7 @@ function teste (name,lastName,email,password) {
 
 }*/
 
-function validateName (name) {
+function validateFirstName (name) {
     userData.firstName = name;
 }
 
@@ -75,12 +65,6 @@ function validateEmail(email) {
 function validatePassword (password) {
     userData.password = password;
 }
-
-registroFirstName.addEventListener('keyup', (event) => validateName(event.target.value)); 
-registroLastName.addEventListener('keyup', (event) => validatelastName(event.target.value)); 
-registroEmail.addEventListener('keyup', (event) => validateEmail(event.target.value))
-registroPassword.addEventListener('keyup', (event) => validatePassword(event.target.value)); 
-
 
 function cadastro (event) {
 
@@ -100,14 +84,33 @@ function cadastro (event) {
     fetch('https://todo-api.ctd.academy/v1/users', requestConfig).then(
         response => {
 
-            if(response.ok) {
+            if (response.ok) {
                 alert('Você foi cadastrado');
             } else {
-                alert('Erro');
+                alert('Usuário ja foi cadastrado');
             }
         }
     );
 }
 
-registrocadastro.addEventListener('click', (event) => cadastro(event));
+/* 03 - Eventos */
 
+    /* 03.1 - Eventos de Validação */
+    
+registroFirstName.addEventListener('keyup', () => validateInput(registroFirstName));
+registroLastName.addEventListener('keyup', () => validateInput(registroLastName));
+registroEmail.addEventListener('keyup', () => validateInput(registroEmail));
+registroPassword.addEventListener('keyup', () => validateInput(registroPassword));
+registroPassword2.addEventListener('keyup', () => validateInput(registroPassword2));
+
+registroPassword.addEventListener('keyup', () => validateRepeatPassword());
+registroPassword2.addEventListener('keyup', () => validateRepeatPassword());
+
+    /* 03.2 - Eventos de Registro */
+
+registroFirstName.addEventListener('keyup', (event) => validateFirstName(event.target.value)); 
+registroLastName.addEventListener('keyup', (event) => validatelastName(event.target.value)); 
+registroEmail.addEventListener('keyup', (event) => validateEmail(event.target.value))
+registroPassword.addEventListener('keyup', (event) => validatePassword(event.target.value)); 
+
+registrocadastro.addEventListener('click', (event) => cadastro(event));

@@ -1,43 +1,36 @@
+/* 01 - Variáveis */
+
 const userEmailRef = document.querySelector('#inputEmail');
 const userSenhaRef = document.querySelector('#inputPassword');
 const buttonLoginRef = document.querySelector('#loginButton');
 
-function validaInput (input) {
+var userLogin = {
+    email:'', 
+    password:''
+}
+
+/* 02 - Funções */
+
+function validateInput(input) {
 
     const inputValidacao = input.checkValidity();
     const elementFatherRef = input.parentElement;
 
     if(inputValidacao) {
         elementFatherRef.classList.remove('error');
-        console.log('Esta sem erro!');
     } else {
         elementFatherRef.classList.add('error');
-        console.log('Esta com erro!');
     }
     
-}
-
-var userLogin = {
-
-    email:'', 
-    password:''
 }
 
 function validateEmail(email) {
     userLogin.email = email;
 }
 
-function validatePassword (password) {
+function validatePassword(password) {
     userLogin.password = password;
-
-    console.log(userLogin)
 }
-
-userEmailRef.addEventListener('keyup', () => validaInput(userEmailRef));
-userSenhaRef.addEventListener('keyup', () => validaInput(userSenhaRef));
-userEmailRef.addEventListener('keyup', (event) => validateEmail(event.target.value))
-userSenhaRef.addEventListener('keyup', (event) => validatePassword(event.target.value)); 
-
 
 function login(event) {
 
@@ -54,20 +47,24 @@ function login(event) {
         body: JSON.stringify(userLogin)
     }
 
-    fetch('https://todo-api.ctd.academy/v1/users/login', requestConfig).then(
-    response => {
-        console.log(response);
-        if(response.ok) {
-            console.log('Usuario existe');
-            
-        } else {
-            console.log('Nao existe');
+    fetch('https://todo-api.ctd.academy/v1/users/login', requestConfig).then(    
+        response => {
+            if (response.ok) {
+                console.log('Usuario existe');
+            } else {
+                console.log('Nao existe');
+            }
         }
-    }
-)
+    );
 
 }
 
+/* 03 - Eventos */
 
+userEmailRef.addEventListener('keyup', () => validateInput(userEmailRef));
+userSenhaRef.addEventListener('keyup', () => validateInput(userSenhaRef));
 
-buttonLoginRef.addEventListener('click',(event)=>login(event))
+userEmailRef.addEventListener('keyup', (event) => validateEmail(event.target.value));
+userSenhaRef.addEventListener('keyup', (event) => validatePassword(event.target.value));
+
+buttonLoginRef.addEventListener('click',(event) => login(event));
