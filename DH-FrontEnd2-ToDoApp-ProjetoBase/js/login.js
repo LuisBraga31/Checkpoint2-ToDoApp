@@ -50,7 +50,14 @@ function login(event) {
     fetch('https://todo-api.ctd.academy/v1/users/login', requestConfig).then(    
         response => {
             if (response.ok) {
-                console.log('Usuario existe');
+                //console.log('Usuario existe');
+                response.json().then(
+                    data => {
+                        localStorage.setItem('userToken', data.jwt);
+                        window.location.href = './tarefas.html';
+                    }
+                )
+
             } else {
                 console.log('Nao existe');
             }

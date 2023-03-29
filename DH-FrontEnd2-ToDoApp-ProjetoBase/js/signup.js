@@ -14,8 +14,8 @@ var userData = {
     password: ''
 };
 
-/* 02 - Funções 
- */
+/* 02 - Funções */
+
 function validateInput (input) {
 
     const inputValidacao = input.checkValidity();
@@ -85,9 +85,11 @@ function cadastro (event) {
         response => {
 
             if (response.ok) {
-                alert('Você foi cadastrado');
+                alert('Cadastro realizado com Sucesso!');
+                window.location.href = './index.html';
+
             } else {
-                alert('Usuário ja foi cadastrado');
+                alert('Usuário cadastrado');
             }
         }
     );
