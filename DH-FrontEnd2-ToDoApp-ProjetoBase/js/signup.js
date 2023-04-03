@@ -14,7 +14,31 @@ var userData = {
     password: ''
 };
 
+var formsErrors = {
+    firstName: true,
+    lastName: true,
+    email: true,
+    password: true,
+    passwordRepeat: true
+}
+
 /* 02 - Funções */
+
+function checkForm() {
+
+    const verificaSenha = registroPassword2.value === registroPassword.value;
+    const formErrorsArray = Object.values(formsErrors);
+    const formValidacao = formErrorsArray.every(item => item === false);
+
+    registrocadastro.disabled = !formValidacao;
+    
+    if(formValidacao && (verificaSenha === true)) {
+        registrocadastro.classList.add('ativado');
+    } else {
+        registrocadastro.classList.remove('ativado');
+    }
+
+}
 
 function validateInput (input) {
 
@@ -26,6 +50,10 @@ function validateInput (input) {
     } else {
         elementFatherRef.classList.add('error');
     }
+
+    formsErrors[input.id] = !inputValidacao;
+
+    checkForm();
     
 }
 

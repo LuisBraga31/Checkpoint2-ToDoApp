@@ -9,7 +9,27 @@ var userLogin = {
     password:''
 }
 
+var formsErrors = {
+    inputEmail: true,
+    inputPassword: true
+}
+
 /* 02 - Funções */
+
+function checkForm() {
+
+    const formErrorsArray = Object.values(formsErrors);
+    const formValidacao = formErrorsArray.every(item => item === false);
+
+    buttonLoginRef.disabled = !formValidacao;
+    
+    if(formValidacao) {
+        buttonLoginRef.classList.add('ativado');
+    } else {
+        buttonLoginRef.classList.remove('ativado');
+    }
+
+}
 
 function validateInput(input) {
 
@@ -22,6 +42,10 @@ function validateInput(input) {
         elementFatherRef.classList.add('error');
     }
     
+    formsErrors[input.id] = !inputValidacao;
+    console.log(formsErrors);
+    checkForm();
+
 }
 
 function validateEmail(email) {

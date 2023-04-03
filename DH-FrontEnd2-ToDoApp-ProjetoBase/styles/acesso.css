@@ -62,7 +62,13 @@ button {
   margin-top: 2em;
   font-weight: 400;
   font-size: 1em;
+  cursor: auto;
 }
+
+button.ativado {
+  background-color: #2658fb;
+  cursor: pointer;
+} 
 
 .form-header {
   color: grey;
