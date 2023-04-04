@@ -10,10 +10,6 @@
   <!-- ---------------- estilos compartilhados entre login e signup ---------------- -->
   <link rel="stylesheet" href="styles/acesso.css">
 
-  <!-- ---------------------- lógica aplicada no login ----------------------- -->
-  <script src="/scripts/utils.js"></script>
-  <script src="/scripts/index.js"></script>
-
 </head>
 
 <body>
@@ -29,7 +25,7 @@
       <h1>Acessar</h1>
       <label>
         Email:
-        <input id="inputEmail" type="email" required>
+        <input id="inputEmail" type="email" required minlength="6">
         <small> Preencha o email corretamente </small>
       </label>
       <label>
@@ -41,12 +37,14 @@
       <button id="loginButton" type="submit" disabled>Acessar</button>
 
     </form>
+
     <div class="ingressar">
       <a href="signup.html">Não possui conta? Crie agora mesmo</a>
     </div>
+
   </div>
 
-  <script src="./js/main.js"></script>
+  <script src="./js/login.js"></script>
 </body>
 
 </html>
