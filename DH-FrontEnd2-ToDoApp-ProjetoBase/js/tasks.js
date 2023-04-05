@@ -1,8 +1,16 @@
+/* 01 - Variáveis */
+
 const authToken = localStorage.getItem('userToken');
 const finishSessionRef = document.querySelector('#closeApp');
 const userNameRef = document.querySelector('#userName');
 const taskRef = document.querySelector('#novaTarefa');
 const buttontaskRef = document.querySelector('#criarTarefa');
+
+const requestHeaders = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Authorization': authToken
+}
 
 var userTask = {
 
@@ -11,28 +19,33 @@ var userTask = {
 
 };
 
-function validateTask(task){
-
-    userTask.description = task;
-
-    console.log(userTask)
-}
-
-taskRef.addEventListener('keyup',(event) => validateTask(event.target.value))
-
-
-const requestHeaders = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-    'Authorization': authToken
-}
-
-
+/* 02 - Funções */
 
 function logout() {
     window.location.href = './index.html';
     localStorage.clear();
 }
+
+function verificaToken () {
+
+    if (authToken===null) {
+
+        logout(); 
+        alert('O usuário não esta logado. Voce será redirecionado a tela inicial!'); 
+    }
+
+    else {
+
+        getUserData();
+    }
+}
+
+function validateDescription(task) {
+
+    userTask.description = task;
+
+}
+
 
 function getUserData() {
 
@@ -50,38 +63,14 @@ function getUserData() {
                     userNameRef.innerText = name;
                 }
             )
-
             if(response.ok) {
                 console.log('Ok');
-            }
-            
+            }  
         }
     )
-
-
 }
 
-
-finishSessionRef.addEventListener('click', () => logout());
-
-
-function verificaToken (){
-
-    if (authToken===null) {
-
-        logout() 
-        alert('Usuário não logado') 
-    }
-
-    else {
-
-        getUserData();
-    }
-}
-
-verificaToken()
-
-function criarTarefa (event){
+function criarTarefa (event) {
 
     event.preventDefault();
 
@@ -103,4 +92,14 @@ function criarTarefa (event){
 
 }
 
-buttontaskRef.addEventListener('click',(event) => criarTarefa(event))
+/* 03 - Eventos */
+
+taskRef.addEventListener('keyup',(event) => validateDescription(event.target.value));
+
+buttontaskRef.addEventListener('click',(event) => criarTarefa(event));
+finishSessionRef.addEventListener('click', () => logout());
+
+
+/* 04 - Invocando Função */
+
+verificaToken();
