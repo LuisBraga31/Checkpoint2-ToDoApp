@@ -96,7 +96,7 @@ function criarTarefa (event) {
         }
     )
 
-
+        taskRef.value="";
 }
 
 function receberTarefa() {
@@ -201,7 +201,7 @@ function insertTasks(tasks) {
 
         tasksFinalizadasRef.innerHTML += `
         <li class="tarefa">
-            <div class="not-done"></div>
+            <div class="not-done"> <img src="assets/lixo.svg"> </div>
             <div class="descricao">
             <p class="nome"> ${tasksFinalizadas[i].description}</p>
             <p class="timestamp">Criada em: ${new Intl.DateTimeFormat('pt-BR').format(taskDate)}</p>
