@@ -18,8 +18,7 @@ const requestHeaders = {
 var userTask = {
 
     description: '',
-    completed: false,
-    createdAt: ''
+    completed: false
 
 };
 
@@ -183,12 +182,14 @@ function insertTasks(tasks) {
 
     for (let i=0; i < tasksPendentes.length; i++) {
     
+        let taskDate = new Date(tasksPendentes[i].createdAt);
+
         tasksPendetesRef.innerHTML += `
         <li class="tarefa">
             <div class="not-done"></div>
             <div class="descricao">
             <p class="nome"> ${tasksPendentes[i].description}</p>
-            <p class="timestamp">Criada em: 15/07/21</p>
+            <p class="timestamp">Criada em: ${new Intl.DateTimeFormat('pt-BR').format(taskDate)}</p>
             </div>
         </li>
         `
@@ -196,12 +197,14 @@ function insertTasks(tasks) {
 
     for (let i=0; i < tasksFinalizadas.length; i++) {
     
+        let taskDate = new Date(tasksFinalizadas[i].createdAt);
+
         tasksFinalizadasRef.innerHTML += `
         <li class="tarefa">
             <div class="not-done"></div>
             <div class="descricao">
             <p class="nome"> ${tasksFinalizadas[i].description}</p>
-            <p class="timestamp">Criada em: 15/07/21</p>
+            <p class="timestamp">Criada em: ${new Intl.DateTimeFormat('pt-BR').format(taskDate)}</p>
             </div>
         </li>
         `
