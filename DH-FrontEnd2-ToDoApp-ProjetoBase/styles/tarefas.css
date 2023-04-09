@@ -126,6 +126,11 @@ a {
   margin-bottom: 1.5em;
 }
 
+.tarefa .not-done img {
+  position: relative;
+  width: 15px;
+}
+
 .tarefa .not-done {
   position: relative;
   height: 1.5em;
@@ -135,6 +140,9 @@ a {
   border: 2px solid var(--secondary);
   z-index: 2;
   transition: background-color 200ms linear;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .tarefa .not-done:hover {
