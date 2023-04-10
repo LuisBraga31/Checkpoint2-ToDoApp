@@ -32,10 +32,9 @@ function logout() {
     localStorage.clear();
 }
 
-function verificaToken () {
+function verificaToken() {
 
     if (authToken===null) {
-
         logout(); 
         alert('O usuário não esta logado. Voce será redirecionado a tela inicial!'); 
     }
@@ -69,14 +68,13 @@ function getUserData() {
                 }
             )
             if(response.ok) {
-                console.log('Ok');
-                receberTarefa();
+                getTasks();
             }  
         }
     )
 }
 
-function criarTarefa (event) {
+function createTask(event) {
 
     event.preventDefault();
 
@@ -90,16 +88,19 @@ function criarTarefa (event) {
     fetch('https://todo-api.ctd.academy/v1/tasks', requestConfig).then(
         response => {
             if (response.ok){
-                console.log('tarefa criada');
-                receberTarefa();
+                getTasks();
+       
             }
         }
     )
 
         taskRef.value="";
+        carregamento();
+
+
 }
 
-function receberTarefa() {
+function getTasks() {
 
     var requestConfig = {
         method: 'GET',
@@ -112,7 +113,6 @@ function receberTarefa() {
                 response.json().then (
                     tasks => {
                         insertTasks(tasks);
-                        console.log(tasks);
                     }
                 )
             }
@@ -120,46 +120,6 @@ function receberTarefa() {
          }
     )
     
-}
-
-function finalizarTarefa(target) {
-
-    var userUpdate = {
-        completed: true
-    }
-
-    var requestConfig = {
-        method: 'PUT',
-        headers: requestHeaders,
-        body: JSON.stringify(userUpdate)
-    }
-
-    fetch(`https://todo-api.ctd.academy/v1/tasks/${target}`, requestConfig).then (
-        response => {
-            if(response.ok) {
-                receberTarefa();
-                console.log('Atualizou!');
-            }
-        }
-    )
-
-}
-
-function deletarTarefa(target) {
-    
-    var requestConfig = {
-        method: 'DELETE',
-        headers: requestHeaders
-    }
-
-    fetch(`https://todo-api.ctd.academy/v1/tasks/${target}`, requestConfig).then (
-        response => {
-            if(response.ok) {
-                receberTarefa();
-                console.log('Deletou!');
-            }
-        }
-    )
 }
 
 function insertTasks(tasks) {
@@ -210,12 +170,52 @@ function insertTasks(tasks) {
         `
     }
 
-    /* ====================================== */
-
-
     atualizar();
     deletar();
 
+}
+
+function updateTask(target) {
+
+    var userUpdate = {
+        completed: true
+    }
+
+    var requestConfig = {
+        method: 'PUT',
+        headers: requestHeaders,
+        body: JSON.stringify(userUpdate)
+    }
+
+    fetch(`https://todo-api.ctd.academy/v1/tasks/${target}`, requestConfig).then (
+        response => {
+            if(response.ok) {
+                getTasks();
+                console.log('Atualizou!');
+            }
+        }
+    )
+
+    carregamento();
+
+}
+
+function deleteTask(target) {
+    
+    var requestConfig = {
+        method: 'DELETE',
+        headers: requestHeaders
+    }
+
+    fetch(`https://todo-api.ctd.academy/v1/tasks/${target}`, requestConfig).then (
+        response => {
+            if(response.ok) {
+                getTasks();
+            }
+        }
+    )
+
+    carregamento();
 }
 
 function atualizar() {
@@ -225,7 +225,7 @@ function atualizar() {
 
         const clickTask = item.children[0];
         
-        clickTask.addEventListener('click', () => finalizarTarefa(tasksPendentes[index].id));
+        clickTask.addEventListener('click', () => updateTask(tasksPendentes[index].id));
     });
 }
 
@@ -236,16 +236,55 @@ function deletar() {
 
         const clickTask = item.children[0];
         
-        clickTask.addEventListener('click', () => deletarTarefa(tasksFinalizadas[index].id));
+        clickTask.addEventListener('click', () => deleteTask(tasksFinalizadas[index].id));
     });
 }
 
+function carregamento(){
+    tasksPendetesRef.innerHTML = `    
+    <div id="skeleton">
+        <li class="tarefa">
+            <div class="not-done"> </div>
+            <div class="descricao">
+            <p class="nome">Nova tarefa</p>
+            <p class="timestamp">Criada em: 15/07/21</p>
+        </div>
+        </li>
+
+        <li class="tarefa">
+            <div class="not-done"></div>
+            <div class="descricao">
+            <p class="nome">Nova tarefa</p>
+            <p class="timestamp">Criada em: 15/07/21</p>
+        </div>
+        </li>
+    </div>`;
+
+    tasksFinalizadasRef.innerHTML = `    
+    <div id="skeleton">
+        <li class="tarefa">
+            <div class="not-done"> </div>
+            <div class="descricao">
+            <p class="nome">Nova tarefa</p>
+            <p class="timestamp">Criada em: 15/07/21</p>
+        </div>
+        </li>
+
+        <li class="tarefa">
+            <div class="not-done"></div>
+            <div class="descricao">
+            <p class="nome">Nova tarefa</p>
+            <p class="timestamp">Criada em: 15/07/21</p>
+        </div>
+        </li>
+    </div>`;
+}
 
 /* 03 - Eventos */
 
 taskRef.addEventListener('keyup',(event) => validateDescription(event.target.value));
 
-buttontaskRef.addEventListener('click',(event) => criarTarefa(event));
+buttontaskRef.addEventListener('click',(event) => createTask(event));
 finishSessionRef.addEventListener('click', () => logout());
 
 
