@@ -25,6 +25,8 @@ var userTask = {
 let tasksPendentes = [];
 let tasksFinalizadas = [];
 
+var checkValidation = false;
+
 /* 02 - Funções */
 
 function logout() {
@@ -43,6 +45,18 @@ function verificaToken() {
 
         getUserData();
     }
+}
+
+function validateInput(input) {
+
+    const inputValidacao = input.checkValidity();
+
+    if(inputValidacao) {
+        checkValidation = true;
+    } else {
+        checkValidation = false;
+    }
+
 }
 
 function validateDescription(task) {
@@ -78,25 +92,30 @@ function createTask(event) {
 
     event.preventDefault();
 
-    var requestConfig = {
-        method: 'POST',
-        headers: requestHeaders,
-	    body: JSON.stringify(userTask)
-
-    }
-
-    fetch('https://todo-api.ctd.academy/v1/tasks', requestConfig).then(
-        response => {
-            if (response.ok){
-                getTasks();
-       
-            }
+    if(checkValidation) {
+        
+        var requestConfig = {
+            method: 'POST',
+            headers: requestHeaders,
+            body: JSON.stringify(userTask)
+    
         }
-    )
+    
+        fetch('https://todo-api.ctd.academy/v1/tasks', requestConfig).then(
+            response => {
+                if (response.ok){
+                    getTasks();
+           
+                }
+            }
+        )
+    
+            taskRef.value="";
+            carregamento();
 
-        taskRef.value="";
-        carregamento();
-
+    } else {
+        alert(' A tarefa não tem caracteres suficientes!');
+    }
 
 }
 
@@ -283,6 +302,7 @@ function carregamento(){
 /* 03 - Eventos */
 
 taskRef.addEventListener('keyup',(event) => validateDescription(event.target.value));
+taskRef.addEventListener('keyup', () => validateInput(taskRef));
 
 buttontaskRef.addEventListener('click',(event) => createTask(event));
 finishSessionRef.addEventListener('click', () => logout());
