@@ -109,12 +109,31 @@ function cadastro (event) {
         response => {
 
             if (response.ok) {
-                alert('Cadastro realizado com Sucesso!');
-                window.location.href = './index.html';
+                Swal.fire(
+                    'Cadastro Realizado!',
+                    'Usuário cadastrado com Sucesso!',
+                    'success'
+                  ).then((result) => {
+                    if(result.closed) {
+                        window.location.href = './index.html';
+                    } else {
+                        window.location.href = './index.html';
+                    }
+                  })
+                
 
             } else {
-                alert('Usuário cadastrado');
-                console.log(userData);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Esse usuário ja foi cadastrado!'
+                  }).then((result) => {
+                    if(result.closed) {
+                        window.location.href = './index.html';
+                    } else {
+                        window.location.href = './index.html';
+                    }
+                  })
             }
         }
     );

@@ -30,15 +30,44 @@ var checkValidation = false;
 /* 02 - Funções */
 
 function logout() {
+
     window.location.href = './index.html';
     localStorage.clear();
+}
+
+function finalizaSession() {
+    Swal.fire({
+        title: 'Tem certeza que deseja sair?',
+        text: "Você será deslogado!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sim, desejo sair!',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          logout();
+        }
+      })
 }
 
 function verificaToken() {
 
     if (authToken===null) {
-        logout(); 
-        alert('O usuário não esta logado. Voce será redirecionado a tela inicial!'); 
+        
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Você não esta logado!'
+          }).then((result) => {
+            if(result.closed) {
+                logout();
+            } else {
+                logout();
+            }
+          })
+
     }
 
     else {
@@ -305,7 +334,7 @@ taskRef.addEventListener('keyup',(event) => validateDescription(event.target.val
 taskRef.addEventListener('keyup', () => validateInput(taskRef));
 
 buttontaskRef.addEventListener('click',(event) => createTask(event));
-finishSessionRef.addEventListener('click', () => logout());
+finishSessionRef.addEventListener('click', () => finalizaSession());
 
 
 /* 04 - Invocando Função */
