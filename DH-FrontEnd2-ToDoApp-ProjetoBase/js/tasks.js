@@ -61,17 +61,17 @@ function verificaToken() {
             title: 'Oops...',
             text: 'Você não esta logado!'
           }).then((result) => {
+            
             if(result.closed) {
                 logout();
             } else {
                 logout();
             }
-          })
 
+          })
     }
 
     else {
-
         getUserData();
     }
 }
@@ -139,11 +139,17 @@ function createTask(event) {
             }
         )
     
-            taskRef.value="";
+            taskRef.value = "";
+            userTask.description = " ";
+            checkValidation = false;
             carregamento();
 
     } else {
-        alert(' A tarefa não tem caracteres suficientes!');
+        Swal.fire({
+            icon: 'error',
+            title: 'Erro ao adicionar tarefa',
+            text: 'A tarefa não tem caracteres suficientes!'
+          })
     }
 
 }
@@ -239,7 +245,6 @@ function updateTask(target) {
         response => {
             if(response.ok) {
                 getTasks();
-                console.log('Atualizou!');
             }
         }
     )
